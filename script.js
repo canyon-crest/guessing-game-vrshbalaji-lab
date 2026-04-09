@@ -12,7 +12,7 @@ function capitalizeFirst(str){
 
 document.getElementById("playBtn").addEventListener("click", play);
 document.getElementById("guessBtn").addEventListener("click", makeGuess);
-
+document.getElementById("giveUpBtn").addEventListener("click", givingUp);
 
 
 function play(){
@@ -41,7 +41,7 @@ function makeGuess(){
     }
     guessCount++;
     if(guess == answer){
-        msg.textContent = "Correct! It took " + guessCount + " tries.";
+        msg.textContent = "Correct! It took you, " + capitalizeFirst(myName) + ", " + guessCount + " tries!";
         updateScore(guessCount);
         resetGame();
     }
@@ -95,3 +95,12 @@ function resetGame(){
     h.disabled = false;
 }
 
+function givingUp(){
+    guess.value = "";
+    guessBtn.disabled = true;
+    giveUpBtn.disabled = true;
+    playBtn.disabled = false;
+    e.disabled = false;
+    m.disabled = false;
+    h.disabled = false;
+}
