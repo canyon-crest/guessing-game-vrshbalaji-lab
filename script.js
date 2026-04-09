@@ -3,8 +3,17 @@ let answer = 0;
 let guessCount = 0;
 const scores = [];
 
+let myName = prompt("What is your name?");
+
+function capitalizeFirst(str){
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+
 document.getElementById("playBtn").addEventListener("click", play);
 document.getElementById("guessBtn").addEventListener("click", makeGuess);
+
+
 
 function play(){
     let range = 0;
@@ -15,7 +24,7 @@ function play(){
         }
         levels[i].disabled = true;
     }
-    document.getElementById("msg").textContent = "Guess a number 1-" + range;
+    document.getElementById("msg").textContent = "Guess a number 1-" + range +", " + capitalizeFirst(myName) + ".";
     answer = Math.floor(Math.random()*range) + 1;
     guessCount = 0;
 
@@ -37,9 +46,23 @@ function makeGuess(){
         resetGame();
     }
     else if(guess < answer){
-        msg.textContent = "Too low, try again.";
+        let difference = Math.abs(guess - answer);
+        if(difference <= 2){
+            msg.textContent = "Too low, try again. You are hot!";
+        } else if(difference <= 5){
+            msg.textContent = "Too low, try again. You are warm.";
+        } else{
+            msg.textContent = "Too low, try again. You are cold.";
+        }
     } else{
-        msg.textContent = "Too high, try again.";
+        let difference = Math.abs(guess - answer);
+        if(difference <= 2){
+            msg.textContent = "Too high, try again. You are hot!";
+        } else if(difference <= 5){
+            msg.textContent = "Too high, try again. You are warm.";
+        } else{
+            msg.textContent = "Too high, try again. You are cold.";
+        }
     }
     
 }
@@ -71,3 +94,4 @@ function resetGame(){
     m.disabled = false;
     h.disabled = false;
 }
+
