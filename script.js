@@ -2,6 +2,9 @@
 let answer = 0;
 let guessCount = 0;
 const scores = [];
+let levels = document.getElementsByName("level");
+let sumTime = 0;
+let previousTime = 100000;
 
 let myName = prompt("What is your name?");
 
@@ -9,15 +12,12 @@ function capitalizeFirst(str){
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-
 document.getElementById("playBtn").addEventListener("click", play);
 document.getElementById("guessBtn").addEventListener("click", makeGuess);
 document.getElementById("giveUpBtn").addEventListener("click", givingUp);
 
-
 function play(){
     let range = 0;
-    let levels = document.getElementsByName("level");
     for(let i=0; i<levels.length; i++){
         if(levels[i].checked){
             range = parseInt(levels[i].value);
@@ -31,6 +31,8 @@ function play(){
     guessBtn.disabled = false;
     giveUpBtn.disabled = false;
     playBtn.disabled = true;
+
+    window.startRoundTime = new Date().getTime();
 }
 
 function makeGuess(){
@@ -85,6 +87,7 @@ function updateScore(score){
         }
     }
 }
+
 function resetGame(){
     guess.value = "";
     guessBtn.disabled = true;
@@ -93,14 +96,41 @@ function resetGame(){
     e.disabled = false;
     m.disabled = false;
     h.disabled = false;
+    let endRoundTime = new Date().getTime();
+    let elapsedTime = (endRoundTime - window.startRoundTime) / 1000;
+    
+    if(elapsedTime < previousTime){
+        document.getElementById("fastest").textContent = "Fastest Game: " + elapsedTime;
+    }
+    sumTime += elapsedTime;
+    averageTime = sumTime / scores.length;
+    document.getElementById("avgTime").textContent = "Average Time: " + averageTime.toFixed(3);
+
+    previousTime = elapsedTime;
 }
 
 function givingUp(){
-    guess.value = "";
-    guessBtn.disabled = true;
-    giveUpBtn.disabled = true;
-    playBtn.disabled = false;
-    e.disabled = false;
-    m.disabled = false;
-    h.disabled = false;
+    let range = 0;
+    for(let i=0; i<levels.length; i++){
+        if(levels[i].checked){
+            range = parseInt(levels[i].value);
+        }
+        levels[i].disabled = true;
+    }
+    updateScore(range);
+    resetGame();
 }
+
+const now = new Date();
+myMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const currentMonth = myMonths[now.getMonth()];
+myDays = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31st"];
+const currentDay = myDays[now.getDate()-1];
+
+
+function displayTime(){
+    document.getElementById("date").textContent = new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds() + ", " + currentMonth + " " + currentDay + ", " + now.getFullYear();
+}
+
+displayTime();
+myCoolTimer = setInterval(displayTime, 1000);
