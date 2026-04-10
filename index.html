@@ -3,6 +3,7 @@
   <head>
     <title>JavaScript Number Guessing Game</title>
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <p id="date"></p>
@@ -18,18 +19,29 @@
     <input type="text" id="guess">
     <button id="guessBtn" disabled>Guess</button>
     <button id="giveUpBtn" disabled>Give Up</button>
-
+    <div id="statscontainer">
     <h3>Stats</h3>
-    <p id="wins">Total wins: 0</p>
-    <p id="avgScore">Average Score: </p>
-    <p id="fastest">Fastest Game: </p>
-    <p id="avgTime">Average Time: </p>
-
+    <table id="stats">
+      <tr>
+      <td id="wins">Total wins: 0</td>
+      </tr>
+      <tr>
+      <td id="avgScore">Average Score: </td>
+      </tr>
+      <tr> 
+        <td id="fastest">Fastest Game: </td>
+      </tr>
+     <tr>
+      <td id="avgTime">Average Time: </td>
+      </tr>
+    </table>
+    
     <h3>Leaderboard</h3>
-    <ol>
+    <ol id="leaderboard">
       <li name="leaderboard">100</li>
       <li name="leaderboard">100</li>
       <li name="leaderboard">100</li>
     </ol>
+  </div>
   </body>
 </html>
